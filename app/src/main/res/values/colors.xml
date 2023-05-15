@@ -6,7 +6,7 @@
     <color name="primaryContrast">#606E8C</color>
 
     <color name="secondary">#EEE9D9</color>
-    <color name="secondaryLighter">None</color>
+    <color name="secondaryLighter">#00FFFFFF</color>
     <color name="secondaryDarker">#AFA289</color>
 
     <color name="white">#FFFFFF</color>
