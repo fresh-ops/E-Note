@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#606E8C</color>
+    <color name="primaryLighter">#9FA9BB</color>
+    <color name="primaryDarker">#3F4E73</color>
+    <color name="primaryContrast">#C4CAD7</color>
+
+    <color name="secondary">#736441</color>
+    <color name="secondaryLighter">#D1C7B3</color>
+    <color name="secondaryDarker">#5A4B23</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="grayLighter">#EEEEEE</color>
+    <color name="gray">#BDBDBD</color>
+    <color name="grayDarker">#616161</color>
+    <color name="black">#121212</color>
+
+    <color name="apply">#43A047</color>
+</resources>
