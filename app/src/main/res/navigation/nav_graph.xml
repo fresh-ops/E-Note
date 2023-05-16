@@ -8,19 +8,19 @@
     <fragment
         android:id="@+id/nav_schedule"
         android:name="com.fresh.e_note.fragments.schedule_fragment.ScheduleFragment"
-        android:label="Schedule"
+        android:label="@string/schedule"
         tools:layout="@layout/fragment_schedule" />
 
     <fragment
         android:id="@+id/nav_tasks"
         android:name="com.fresh.e_note.fragments.tasks_fragment.TasksFragment"
-        android:label="Tasks"
+        android:label="@string/tasks"
         tools:layout="@layout/fragment_tasks" />
 
     <fragment
         android:id="@+id/nav_notes"
         android:name="com.fresh.e_note.fragments.notes_fragment.NotesFragment"
-        android:label="Notes"
+        android:label="@string/notes"
         tools:layout="@layout/fragment_notes" />
 
 </navigation>
