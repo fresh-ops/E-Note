@@ -11,6 +11,11 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnSecondary">@color/white</item>
     </style>
+    
+    <style name="Theme.ENote.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+
+    <style name="Theme.ENote.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    
     <style name="Theme.ENote" parent="Base.Theme.ENote" />
 </resources>
