@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppearance.Large" parent="TextAppearance.AppCompat.Large">
+        <item name="fontFamily">"sans-serif-medium"</item>
+    </style>
+
+    <style name="TextAppearance.Large.Header1" parent="TextAppearance.Large">
+        <item name="android:textSize">30sp</item>
+    </style>
+    <style name="TextAppearance.Large.Header2" parent="TextAppearance.Large">
+        <item name="android:textSize">26sp</item>
+    </style>
+    <style name="TextAppearance.Large.Header3" parent="TextAppearance.Large">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="TextAppearance.Medium" parent="TextAppearance.AppCompat.Medium">
+        <item name="fontFamily">"sans-serif"</item>
+    </style>
+
+    <style name="TextAppearance.Medium.PlainText" parent="TextAppearance.Medium">
+        <item name="android:textSize">18sp</item>
+    </style>
+</resources>
