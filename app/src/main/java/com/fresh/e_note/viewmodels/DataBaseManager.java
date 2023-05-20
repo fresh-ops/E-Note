@@ -49,6 +49,7 @@ public class DataBaseManager extends SQLiteOpenHelper {
         }
 
         db.insert(NOTES_TABLE, null, cv);
+        db.close();
     }
 
     @Nullable
@@ -81,27 +82,46 @@ public class DataBaseManager extends SQLiteOpenHelper {
                 db.update(NOTES_TABLE, cv, "id=?", new String[]{id});
                 break;
         }
+        db.close();
     }
 
     public void deleteItem(Note note) {
-        SQLiteDatabase db = getWritableDatabase();
-        String id = Integer.toString(note.getID());
-
+        String table = "";
         switch (note.getType()) {
             case Note.NOTE_TYPE:
-                db.delete(NOTES_TABLE, "id=?", new String[]{id});
+                table = NOTES_TABLE;
                 break;
         }
+        deleteItem(table, note.getID());
     }
 
-    public void clearTable(String tableName) {
+    public void deleteItem(String table, int id) {
         SQLiteDatabase db = getWritableDatabase();
-        String query = "DELETE FROM " + tableName;
-        db.execSQL(query);
+        String index = Integer.toString(id);
+        db.delete(table, "id=?", new String[]{index});
+        db.close();
     }
 
-    private String makeTableQuery(String tableName) {
-        switch (tableName) {
+    public void cleanTable(String table) {
+        Cursor cursor = readData(table);
+        if (cursor == null || cursor.getCount() == 0) return;
+
+        while (cursor.moveToNext()) {
+            switch (table) {
+                case NOTES_TABLE:
+                    int id = Integer.parseInt(cursor.getString(0));
+                    String title = cursor.getString(1);
+                    String text = cursor.getString(2);
+
+                    if (title.equals("") && text.equals("")) deleteItem(NOTES_TABLE, id);
+            }
+        }
+
+        cursor.close();
+    }
+
+    private String makeTableQuery(String table) {
+        switch (table) {
             case NOTES_TABLE:
                 return String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
                         "%s TEXT, %s TEXT)", NOTES_TABLE, COLUMN_ID, NOTE_TITLE, NOTE_TEXT);

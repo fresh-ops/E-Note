@@ -1,5 +1,7 @@
 package com.fresh.e_note.viewmodels;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fresh.e_note.NoteEditActivity;
 import com.fresh.e_note.R;
 import com.fresh.e_note.models.Note;
 
@@ -19,10 +22,12 @@ public class NotesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public static final int CONTEXT_EDIT = 0;
     public static final int CONTEXT_DELETE = 1;
 
+    private final Activity activity;
     private final List<Note> list;
     private int position;
 
-    public NotesAdapter(List<Note> list) {
+    public NotesAdapter(Activity activity, List<Note> list) {
+        this.activity = activity;
         this.list = list;
     }
 
@@ -47,13 +52,15 @@ public class NotesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 Note currentNote = list.get(position);
                 noteViewHolder.titleTV.setText(currentNote.getTitle());
                 noteViewHolder.textTV.setText(currentNote.getText());
+                noteViewHolder.noteCardLV.setOnClickListener(v -> {
+                    Intent intent = new Intent(activity, NoteEditActivity.class);
+                    intent.putExtra(Note.class.getSimpleName(), currentNote);
+                    activity.startActivity(intent);
+                });
                 noteViewHolder.noteCardLV.setOnLongClickListener(
-                        new View.OnLongClickListener() {
-                            @Override
-                            public boolean onLongClick(View v) {
-                                setPosition(position);
-                                return false;
-                            }
+                        v -> {
+                            setPosition(position);
+                            return false;
                         }
                 );
         }

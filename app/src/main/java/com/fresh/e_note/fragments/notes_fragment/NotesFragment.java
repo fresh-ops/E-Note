@@ -1,5 +1,6 @@
 package com.fresh.e_note.fragments.notes_fragment;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fresh.e_note.NoteEditActivity;
 import com.fresh.e_note.R;
 import com.fresh.e_note.models.Note;
 import com.fresh.e_note.viewmodels.DataBaseManager;
@@ -36,7 +38,7 @@ public class NotesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         dataBaseManager = new DataBaseManager(getActivity());
         fetchData();
-        adapter = new NotesAdapter(noteList);
+        adapter = new NotesAdapter(getActivity(), noteList);
         RecyclerView recyclerView = view.findViewById(R.id.recycleView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -45,22 +47,9 @@ public class NotesFragment extends Fragment {
         registerForContextMenu(recyclerView);
     }
 
-    private void fetchData() {
-        noteList.clear();
-        Cursor cursor = dataBaseManager.readData(DataBaseManager.NOTES_TABLE);
-
-        if (cursor == null || cursor.getCount() == 0) return;
-        while (cursor.moveToNext()) {
-            int id = Integer.parseInt(cursor.getString(0));
-            String title = cursor.getString(1);
-            String text = cursor.getString(2);
-            noteList.add(new Note(id, title, text));
-        }
-    }
-
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        int position = -1;
+        int position;
         try {
             position = adapter.getPosition();
         } catch (Exception e) {
@@ -69,6 +58,7 @@ public class NotesFragment extends Fragment {
 
         switch (item.getItemId()) {
             case NotesAdapter.CONTEXT_EDIT:
+                editNote(position);
                 break;
             case NotesAdapter.CONTEXT_DELETE:
                 Note note = noteList.get(position);
@@ -78,5 +68,35 @@ public class NotesFragment extends Fragment {
         fetchData();
         adapter.notifyDataSetChanged();
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        fetchData();
+        adapter.notifyDataSetChanged();
+        super.onResume();
+    }
+
+    private void fetchData() {
+        noteList.clear();
+        dataBaseManager.cleanTable(DataBaseManager.NOTES_TABLE);
+        Cursor cursor = dataBaseManager.readData(DataBaseManager.NOTES_TABLE);
+
+        if (cursor == null || cursor.getCount() == 0) return;
+        while (cursor.moveToNext()) {
+            int id = Integer.parseInt(cursor.getString(0));
+            String title = cursor.getString(1);
+            String text = cursor.getString(2);
+            noteList.add(new Note(id, title, text));
+        }
+
+        cursor.close();
+    }
+
+    private void editNote(int position) {
+        Intent intent = new Intent(getContext(), NoteEditActivity.class);
+        Note note = noteList.get(position);
+        intent.putExtra(Note.class.getSimpleName(), note);
+        startActivity(intent);
     }
 }
