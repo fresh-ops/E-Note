@@ -1,6 +1,5 @@
 package com.fresh.e_note;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -9,13 +8,20 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
-import com.fresh.e_note.fragments.notes_fragment.NotesFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity{
-    private DrawerLayout drawer;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    private final int SCHEDULE_FRAGMENT_IND = 0;
+    private final int TASKS_FRAGMENT_IND = 1;
+    private final int NOTES_FRAGMENT_IND = 2;
+
     private AppBarConfiguration configuration;
 
     @Override
@@ -26,7 +32,7 @@ public class MainActivity extends AppCompatActivity{
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
-        drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         configuration = new AppBarConfiguration.Builder(
                 R.id.nav_schedule, R.id.nav_tasks, R.id.nav_notes)
@@ -36,6 +42,9 @@ public class MainActivity extends AppCompatActivity{
         NavController controller = Navigation.findNavController(this, R.id.nav_host_fragment_container_main);
         NavigationUI.setupActionBarWithNavController(this, controller, configuration);
         NavigationUI.setupWithNavController(navigationView, controller);
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(this);
     }
 
     @Override
@@ -43,5 +52,28 @@ public class MainActivity extends AppCompatActivity{
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_container_main);
         return NavigationUI.navigateUp(navController, configuration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (getCurrentFragmentInd()) {
+            case SCHEDULE_FRAGMENT_IND:
+            case TASKS_FRAGMENT_IND:
+            case NOTES_FRAGMENT_IND:
+                Intent intent = new Intent(this, NoteEditActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+
+    private int getCurrentFragmentInd() {
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        Menu menu = navigationView.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            if (item.isChecked()) return i;
+        }
+
+        return -1;
     }
 }

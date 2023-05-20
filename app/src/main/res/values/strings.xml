@@ -7,4 +7,10 @@
     <string name="notes">Notes</string>
     <string name="open_navigation">Open navigation drawer</string>
     <string name="close_navigation">Close navigation drawer</string>
+    <string name="close_note_edit">Close note edit</string>
+    <string name="title">Title</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="text">Text</string>
+    <string name="add_note">Add note</string>
 </resources>

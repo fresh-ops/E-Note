@@ -11,6 +11,8 @@ public class Note implements Serializable {
     public static final int TASK_TYPE = 1;
     public static final int TIMETABLE_ITEM_TYPE = 2;
 
+    private final int ID;
+
     private String title;
     private String text;
 
@@ -18,8 +20,8 @@ public class Note implements Serializable {
      * Note class constructor
      * creates new Note instance with empty title and text
      */
-    public Note() {
-        this(null);
+    public Note(int id) {
+        this(id,null);
     }
 
     /**
@@ -27,8 +29,8 @@ public class Note implements Serializable {
      * creates new Note instance with title only
      * @param title title of note
      */
-    public Note(String title) {
-        this(title, null);
+    public Note(int id, String title) {
+        this(id, title, null);
     }
 
     /**
@@ -37,25 +39,26 @@ public class Note implements Serializable {
      * @param title title of note
      * @param text text of note
      */
-    public Note(String title, String text) {
+    public Note(int id, String title, String text) {
+        this.ID = id;
         this.title = title;
         this.text = text;
     }
 
     /**
      * Note title getter
-     * @return title of note
+     * @return title of note or empty string if title is null
      */
     public String getTitle() {
-        return title;
+        return title == null ? "" : text;
     }
 
     /**
      * Note text getter
-     * @return text of note
+     * @return text of note or empty string if text is null
      */
     public String getText() {
-        return text;
+        return text == null ? "" : text;
     }
 
     /**
@@ -86,5 +89,15 @@ public class Note implements Serializable {
         if (text == null) return;
         if (text.equals(this.text)) return;
         this.text = text;
+    }
+
+    public boolean isEmpty() {
+        boolean hasTitle = !((title == null) || title.isEmpty());
+        boolean hasText = !((text == null) || text.isEmpty());
+        return !(hasTitle || hasText);
+    }
+
+    public int getID() {
+        return ID;
     }
 }

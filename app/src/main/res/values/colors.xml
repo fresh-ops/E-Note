@@ -16,4 +16,6 @@
     <color name="black">#121212</color>
 
     <color name="apply">#66BB6A</color>
+    <color name="FABIcon">@color/grayDarker</color>
+    <color name="stroke">@color/black</color>
 </resources>

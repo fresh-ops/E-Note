@@ -11,9 +11,15 @@
 
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnSecondary">@color/white</item>
+        <item name="backgroundColor">@color/black</item>
     </style>
 
     <style name="Theme.ENote.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.ENote.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.ENote.FAB" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <item name="android:background">@color/gray</item>
+        <item name="android:tint">@color/white</item>
+    </style>
 </resources>
