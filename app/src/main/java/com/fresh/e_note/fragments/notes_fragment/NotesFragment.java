@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class NotesFragment extends Fragment {
     private final List<Note> noteList = new ArrayList<>();
+    private NotesAdapter adapter;
     private DataBaseManager dataBaseManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,14 +36,17 @@ public class NotesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         dataBaseManager = new DataBaseManager(getActivity());
         fetchData();
-        NotesAdapter adapter = new NotesAdapter(noteList);
+        adapter = new NotesAdapter(noteList);
         RecyclerView recyclerView = view.findViewById(R.id.recycleView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+
+        registerForContextMenu(recyclerView);
     }
 
     private void fetchData() {
+        noteList.clear();
         Cursor cursor = dataBaseManager.readData(DataBaseManager.NOTES_TABLE);
 
         if (cursor == null || cursor.getCount() == 0) return;
@@ -51,5 +56,27 @@ public class NotesFragment extends Fragment {
             String text = cursor.getString(2);
             noteList.add(new Note(id, title, text));
         }
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int position = -1;
+        try {
+            position = adapter.getPosition();
+        } catch (Exception e) {
+            return super.onContextItemSelected(item);
+        }
+
+        switch (item.getItemId()) {
+            case NotesAdapter.CONTEXT_EDIT:
+                break;
+            case NotesAdapter.CONTEXT_DELETE:
+                Note note = noteList.get(position);
+                dataBaseManager.deleteItem(note);
+        }
+
+        fetchData();
+        adapter.notifyDataSetChanged();
+        return super.onContextItemSelected(item);
     }
 }

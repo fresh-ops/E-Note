@@ -50,7 +50,7 @@ public class Note implements Serializable {
      * @return title of note or empty string if title is null
      */
     public String getTitle() {
-        return title == null ? "" : text;
+        return title == null ? "" : title;
     }
 
     /**

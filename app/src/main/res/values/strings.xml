@@ -13,4 +13,6 @@
     <string name="cancel">Cancel</string>
     <string name="text">Text</string>
     <string name="add_note">Add note</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
 </resources>
