@@ -18,7 +18,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private final int SCHEDULE_FRAGMENT_IND = 0;
     private final int TASKS_FRAGMENT_IND = 1;
     private final int NOTES_FRAGMENT_IND = 2;
 
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         configuration = new AppBarConfiguration.Builder(
-                R.id.nav_schedule, R.id.nav_tasks, R.id.nav_notes)
+                R.id.nav_tasks, R.id.nav_notes)
                 .setOpenableLayout(drawer)
                 .build();
 
@@ -58,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         Intent intent = null;
         switch (getCurrentFragmentInd()) {
-            case SCHEDULE_FRAGMENT_IND:
             case TASKS_FRAGMENT_IND:
                 intent = new Intent(this, TaskEditActivity.class);
                 break;

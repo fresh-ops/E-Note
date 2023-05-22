@@ -3,13 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/nav_schedule">
-
-    <fragment
-        android:id="@+id/nav_schedule"
-        android:name="com.fresh.e_note.fragments.schedule_fragment.ScheduleFragment"
-        android:label="@string/schedule"
-        tools:layout="@layout/fragment_schedule" />
+    app:startDestination="@id/nav_tasks">
 
     <fragment
         android:id="@+id/nav_tasks"
