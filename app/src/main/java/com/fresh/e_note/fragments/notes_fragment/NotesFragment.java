@@ -39,7 +39,7 @@ public class NotesFragment extends Fragment {
         dataBaseManager = new DataBaseManager(getActivity());
         fetchData();
         adapter = new NotesAdapter(getActivity(), noteList);
-        RecyclerView recyclerView = view.findViewById(R.id.recycleView);
+        RecyclerView recyclerView = view.findViewById(R.id.note_recycler_view);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
@@ -84,7 +84,7 @@ public class NotesFragment extends Fragment {
 
         if (cursor == null || cursor.getCount() == 0) return;
         while (cursor.moveToNext()) {
-            int id = Integer.parseInt(cursor.getString(0));
+            int id = cursor.getInt(0);
             String title = cursor.getString(1);
             String text = cursor.getString(2);
             noteList.add(new Note(id, title, text));

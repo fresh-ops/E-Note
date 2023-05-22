@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ENote"
         tools:targetApi="31">
         <activity
+            android:name=".TaskEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".NoteEditActivity"
             android:exported="false" />
         <activity

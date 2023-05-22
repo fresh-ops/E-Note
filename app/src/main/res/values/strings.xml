@@ -15,4 +15,5 @@
     <string name="add_note">Add note</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
+    <string name="set_time">Set time</string>
 </resources>

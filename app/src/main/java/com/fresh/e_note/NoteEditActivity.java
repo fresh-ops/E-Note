@@ -29,13 +29,12 @@ public class NoteEditActivity extends AppCompatActivity  implements View.OnClick
             note = (Note) arguments.getSerializable(Note.class.getSimpleName());
         }
         ((EditText) findViewById(R.id.note_edit_title)).setText(note.getTitle());
-        ((EditText) findViewById(R.id.note_edit_text)).setText(note.getText());
+        ((EditText) findViewById(R.id.task_edit_text)).setText(note.getText());
 
     }
 
     @Override
     public void onClick(View view) {
-        System.out.println("finish");
         int id = view.getId();
         if (id == R.id.note_edit_close || id == R.id.btn_cancel) {
             finish();
@@ -55,7 +54,7 @@ public class NoteEditActivity extends AppCompatActivity  implements View.OnClick
 
     private void fetchData() {
         EditText noteTitle = findViewById(R.id.note_edit_title);
-        EditText noteText = findViewById(R.id.note_edit_text);
+        EditText noteText = findViewById(R.id.task_edit_text);
 
         note.setTitle(noteTitle.getText().toString());
         note.setText(noteText.getText().toString());

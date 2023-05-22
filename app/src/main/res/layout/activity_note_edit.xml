@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/note_edit_text">
+        app:layout_constraintBottom_toTopOf="@id/task_edit_text">
 
         <EditText
             android:id="@+id/note_edit_title"
@@ -44,7 +44,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/note_edit_text"
+        android:id="@+id/task_edit_text"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="top"
@@ -69,6 +69,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/note_edit_text" />
+        app:layout_constraintTop_toBottomOf="@id/task_edit_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

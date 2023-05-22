@@ -56,14 +56,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        Intent intent = null;
         switch (getCurrentFragmentInd()) {
             case SCHEDULE_FRAGMENT_IND:
             case TASKS_FRAGMENT_IND:
+                intent = new Intent(this, TaskEditActivity.class);
+                break;
             case NOTES_FRAGMENT_IND:
-                Intent intent = new Intent(this, NoteEditActivity.class);
-                startActivity(intent);
+                intent = new Intent(this, NoteEditActivity.class);
                 break;
         }
+        startActivity(intent);
     }
 
     private int getCurrentFragmentInd() {

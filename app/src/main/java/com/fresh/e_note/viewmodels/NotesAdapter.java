@@ -6,6 +6,7 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fresh.e_note.NoteEditActivity;
 import com.fresh.e_note.R;
+import com.fresh.e_note.TaskEditActivity;
 import com.fresh.e_note.models.Note;
+import com.fresh.e_note.models.Task;
 
 import java.util.List;
 
@@ -35,10 +38,15 @@ public class NotesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder = null;
+        View itemView;
         switch (viewType) {
             case Note.NOTE_TYPE:
-                View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.notes_items_list, parent, false);
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.notes_items_list, parent, false);
                 holder = new NoteViewHolder(itemView);
+                break;
+            case Note.TASK_TYPE:
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_items_list, parent, false);
+                holder = new TaskViewHolder(itemView);
                 break;
         }
         return holder;
@@ -48,21 +56,36 @@ public class NotesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
             case Note.NOTE_TYPE:
-                NoteViewHolder noteViewHolder = (NoteViewHolder) holder;
+                NoteViewHolder noteVH = (NoteViewHolder) holder;
                 Note currentNote = list.get(position);
-                noteViewHolder.titleTV.setText(currentNote.getTitle());
-                noteViewHolder.textTV.setText(currentNote.getText());
-                noteViewHolder.noteCardLV.setOnClickListener(v -> {
+                noteVH.titleTV.setText(currentNote.getTitle());
+                noteVH.textTV.setText(currentNote.getText());
+                noteVH.noteCardLV.setOnClickListener(v -> {
                     Intent intent = new Intent(activity, NoteEditActivity.class);
                     intent.putExtra(Note.class.getSimpleName(), currentNote);
                     activity.startActivity(intent);
                 });
-                noteViewHolder.noteCardLV.setOnLongClickListener(
+                noteVH.noteCardLV.setOnLongClickListener(
                         v -> {
                             setPosition(position);
                             return false;
                         }
                 );
+                break;
+            case Note.TASK_TYPE:
+                TaskViewHolder taskVH = (TaskViewHolder) holder;
+                Task currentTask = (Task) list.get(position);
+                taskVH.titleTV.setText(currentTask.getTitle());
+                taskVH.timeTV.setText(currentTask.getStart().toString());
+                taskVH.taskCardLV.setOnClickListener(v -> {
+                    Intent intent = new Intent(activity, TaskEditActivity.class);
+                    intent.putExtra(Task.class.getSimpleName(), currentTask);
+                    activity.startActivity(intent);
+                });
+                taskVH.taskCardLV.setOnLongClickListener(v -> {
+                    setPosition(position);
+                    return false;
+                });
         }
     }
 
@@ -81,6 +104,10 @@ public class NotesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         switch (holder.getItemViewType()) {
             case Note.NOTE_TYPE:
                 ((NoteViewHolder) holder).noteCardLV.setOnLongClickListener(null);
+                break;
+            case Note.TASK_TYPE:
+                ((TaskViewHolder) holder).taskCardLV.setOnLongClickListener(null);
+                break;
         }
         super.onViewRecycled(holder);
     }
@@ -107,6 +134,27 @@ public class NotesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             itemView.setOnCreateContextMenuListener(
                     this
             );
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.add(0, NotesAdapter.CONTEXT_EDIT, 0, R.string.edit);
+            menu.add(0, NotesAdapter.CONTEXT_DELETE, 0, R.string.delete);
+        }
+    }
+
+    public static class TaskViewHolder extends RecyclerView.ViewHolder
+    implements View.OnCreateContextMenuListener {
+        private final TextView titleTV;
+        private final TextView timeTV;
+        private final LinearLayout taskCardLV;
+
+        public TaskViewHolder(View itemView) {
+            super(itemView);
+            titleTV = itemView.findViewById(R.id.task_title);
+            timeTV = itemView.findViewById(R.id.task_time);
+            taskCardLV = itemView.findViewById(R.id.task_card);
+            taskCardLV.setOnCreateContextMenuListener(this);
         }
 
         @Override
