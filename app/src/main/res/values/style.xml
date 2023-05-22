@@ -5,7 +5,7 @@
     </style>
 
     <style name="TextAppearance.Large.Header1" parent="TextAppearance.Large">
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">28sp</item>
     </style>
     <style name="TextAppearance.Large.Header2" parent="TextAppearance.Large">
         <item name="android:textSize">26sp</item>
