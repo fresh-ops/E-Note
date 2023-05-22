@@ -18,8 +18,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private final int TASKS_FRAGMENT_IND = 1;
-    private final int NOTES_FRAGMENT_IND = 2;
+    private final int TASKS_FRAGMENT_IND = 0;
+    private final int NOTES_FRAGMENT_IND = 1;
 
     private AppBarConfiguration configuration;
 
