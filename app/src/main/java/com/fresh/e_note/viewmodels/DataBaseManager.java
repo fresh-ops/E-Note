@@ -50,11 +50,13 @@ public class DataBaseManager extends SQLiteOpenHelper {
     public void addNote(Note note) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
+        String table = "";
 
         switch (note.getType()) {
             case Note.NOTE_TYPE:
                 cv.put(NOTE_TITLE, note.getTitle());
                 cv.put(NOTE_TEXT, note.getText());
+                table = NOTES_TABLE;
                 break;
             case Note.TASK_TYPE:
                 Task task = (Task) note;
@@ -66,9 +68,11 @@ public class DataBaseManager extends SQLiteOpenHelper {
                 else {
                     cv.put(TASK_START, "");
                 }
+                table = TASKS_TABLE;
+                break;
         }
 
-        db.insert(TASKS_TABLE, null, cv);
+        db.insert(table, null, cv);
         db.close();
     }
 
